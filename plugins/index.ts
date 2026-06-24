@@ -17,7 +17,8 @@
  *   - StatsWidgetPlugin    → new widget card on the stats page
  */
 
-export { pluginRegistry } from "./registry";
+import { pluginRegistry } from "./registry";
+export { pluginRegistry };
 
 export type {
   Plugin,
@@ -33,5 +34,5 @@ export type {
 } from "./types";
 
 // ── Register plugins here ──────────────────────────────────────────────────
-// import { examplePlugin } from "./example-plugin";
-// pluginRegistry.register(examplePlugin);
+import siteSettingsPlugin from "./site-settings";
+pluginRegistry.register(siteSettingsPlugin);

@@ -1,9 +1,11 @@
-import config from "@/app/config";
+import { getSiteSettings } from "@/utils/supabase/queries";
 import HeaderMenu from "@/components/HeaderMenu";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function DashboardHeader() {
+export default async function DashboardHeader() {
+  const { site_name, site_icon_url } = await getSiteSettings();
+
   return (
     <header className="sticky top-0 z-30 bg-surface/80 backdrop-blur-xl border-b border-border shadow-soft transition-all duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -14,15 +16,16 @@ export default function DashboardHeader() {
           >
             <div className="relative size-8 rounded-xl overflow-hidden shrink-0 border border-border transition-all">
               <Image
-                src="/icon.png"
+                src={site_icon_url ?? "/icon.png"}
                 alt="Logo"
                 fill
                 className="object-contain"
                 sizes="32px"
+                unoptimized={!!site_icon_url}
               />
             </div>
             <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-800 group-hover:text-amber-700 transition-colors">
-              {config.siteName}
+              {site_name}
             </h1>
           </Link>
         </div>
