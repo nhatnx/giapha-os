@@ -1,5 +1,6 @@
 "use client";
 
+import { pluginRegistry } from "@/plugins";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BarChart2,
@@ -142,6 +143,29 @@ export default function HeaderMenu() {
                   </Link>
                 </>
               )}
+
+              {pluginRegistry
+                .getDashboardPages()
+                .filter(
+                  (p) =>
+                    !p.requiredRole ||
+                    (p.requiredRole === "admin" && isAdmin) ||
+                    (p.requiredRole === "editor" && isEditor),
+                )
+                .map((p) => {
+                  const Icon = p.navIcon;
+                  return (
+                    <Link
+                      key={p.id}
+                      href={p.path}
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-stone-700 hover:text-amber-700 hover:bg-amber-50 transition-colors"
+                    >
+                      <Icon className="size-4" />
+                      {p.navLabel}
+                    </Link>
+                  );
+                })}
 
               <div className="h-px bg-stone-100 my-1 mx-4" />
 

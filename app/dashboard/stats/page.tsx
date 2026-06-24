@@ -1,4 +1,5 @@
 import FamilyStats from "@/components/FamilyStats";
+import PluginStatsWidgets from "@/components/PluginStatsWidgets";
 import { getSupabase } from "@/utils/supabase/queries";
 
 export const metadata = {
@@ -24,6 +25,10 @@ export default async function StatsPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1">
         <FamilyStats
+          persons={persons ?? []}
+          relationships={relationships ?? []}
+        />
+        <PluginStatsWidgets
           persons={persons ?? []}
           relationships={relationships ?? []}
         />

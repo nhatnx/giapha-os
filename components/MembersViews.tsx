@@ -3,6 +3,7 @@
 import { useMemberListView } from "@/context/MemberListContext";
 import MemberList from "@/components/MemberList";
 import RootSelector from "@/components/RootSelector";
+import { pluginRegistry } from "@/plugins";
 import { Person, Relationship } from "@/types";
 import { useEffect, useMemo, useRef } from "react";
 import dynamic from "next/dynamic";
@@ -176,6 +177,19 @@ export default function MembersViews({
               canEdit={canEdit}
             />
           )}
+          {pluginRegistry.getTreeViews().map((plugin) => {
+            if (currentView !== plugin.viewKey) return null;
+            const PluginView = plugin.component;
+            return (
+              <PluginView
+                key={plugin.viewKey}
+                personsMap={personsMap}
+                relationships={relationships}
+                roots={roots}
+                canEdit={canEdit}
+              />
+            );
+          })}
         </div>
       </main>
     </>
