@@ -38,7 +38,7 @@ function StatCard({
   icon,
   color,
   delay = 0,
-}: Readonly<StatCardProps>) {
+}: StatCardProps) {
   const pct = total > 0 ? Math.round((value / total) * 100) : 0;
 
   return (
@@ -84,12 +84,12 @@ function GenerationRow({
   count,
   max,
   delay,
-}: Readonly<{
+}: {
   gen: number;
   count: number;
   max: number;
   delay: number;
-}>) {
+}) {
   const pct = max > 0 ? (count / max) * 100 : 0;
   return (
     <div className="flex items-center gap-3">
@@ -114,7 +114,7 @@ function GenerationRow({
 export default function FamilyStats({
   persons,
   relationships,
-}: Readonly<FamilyStatsProps>) {
+}: FamilyStatsProps) {
   const stats = useMemo(() => {
     const total = persons.length;
 
