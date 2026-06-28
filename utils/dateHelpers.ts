@@ -23,11 +23,7 @@ export function getLunarDateString(
   if (!year || !month || !day) return null;
 
   try {
-    const solar = Solar.fromYmd(
-      year,
-      parseInt(month.toString()),
-      parseInt(day.toString()),
-    );
+    const solar = Solar.fromYmd(year, month, day);
     const lunar = solar.getLunar();
 
     const lDay = lunar.getDay().toString().padStart(2, "0");
@@ -51,11 +47,7 @@ export function getSolarDateString(
   if (!year || !month || !day) return "Chưa rõ";
 
   try {
-    const lunar = Lunar.fromYmd(
-      year,
-      parseInt(month.toString()),
-      parseInt(day.toString()),
-    );
+    const lunar = Lunar.fromYmd(year, month, day);
     const solar = lunar.getSolar();
 
     const sDay = solar.getDay().toString().padStart(2, "0");
@@ -169,11 +161,7 @@ export function getZodiacAnimal(
 
   if (month && day) {
     try {
-      const solar = Solar.fromYmd(
-        year,
-        parseInt(month.toString()),
-        parseInt(day.toString()),
-      );
+      const solar = Solar.fromYmd(year, month, day);
       targetYear = solar.getLunar().getYear();
     } catch (error) {
       console.error("Lunar conversion error in zodiac:", error);
@@ -215,7 +203,7 @@ const DIA_CHI: Record<string, string> = {
 /**
  * Convert a Chinese Gan-Zhi string (e.g. "丙午") to Vietnamese (e.g. "Bính Ngọ").
  */
-function ganZhiToVietnamese(ganZhi: string): string {
+export function ganZhiToVietnamese(ganZhi: string): string {
   if (!ganZhi || ganZhi.length < 2) return ganZhi;
   const can = THIEN_CAN[ganZhi[0]] ?? ganZhi[0];
   const chi = DIA_CHI[ganZhi[1]] ?? ganZhi[1];
