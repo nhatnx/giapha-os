@@ -289,18 +289,15 @@ export default function MemberDetailContent({
                       </h3>
                     </div>
                     <div className="flex items-center gap-1">
-                      {person.death_year &&
-                        getZodiacAnimal(
-                          person.death_year,
-                          person.death_month,
-                          person.death_day,
-                        ) && (
+                      {person.death_lunar_year &&
+                        person.death_lunar_month &&
+                        person.death_lunar_day && (
                           <span className="text-[10px] font-sans font-bold text-rose-700 bg-rose-50 border border-rose-200/60 rounded-md px-1.5 py-0.5 whitespace-nowrap shadow-xs tracking-wider">
                             {ganZhiToVietnamese(
                               Lunar.fromYmd(
-                                Number.parseInt(person.death_lunar_year + ""),
-                                Number.parseInt(person.death_lunar_month + ""),
-                                Number.parseInt(person.death_lunar_day + ""),
+                                person.death_lunar_year,
+                                person.death_lunar_month,
+                                person.death_lunar_day,
                               ).getYearInGanZhi(),
                             )}
                           </span>

@@ -23,11 +23,7 @@ export function getLunarDateString(
   if (!year || !month || !day) return null;
 
   try {
-    const solar = Solar.fromYmd(
-      year,
-      Number.parseInt(month.toString()),
-      Number.parseInt(day.toString()),
-    );
+    const solar = Solar.fromYmd(year, month, day);
     const lunar = solar.getLunar();
 
     const lDay = lunar.getDay().toString().padStart(2, "0");
@@ -51,11 +47,7 @@ export function getSolarDateString(
   if (!year || !month || !day) return "Chưa rõ";
 
   try {
-    const lunar = Lunar.fromYmd(
-      year,
-      Number.parseInt(month.toString()),
-      Number.parseInt(day.toString()),
-    );
+    const lunar = Lunar.fromYmd(year, month, day);
     const solar = lunar.getSolar();
 
     const sDay = solar.getDay().toString().padStart(2, "0");
@@ -169,11 +161,7 @@ export function getZodiacAnimal(
 
   if (month && day) {
     try {
-      const solar = Solar.fromYmd(
-        year,
-        Number.parseInt(month.toString()),
-        Number.parseInt(day.toString()),
-      );
+      const solar = Solar.fromYmd(year, month, day);
       targetYear = solar.getLunar().getYear();
     } catch (error) {
       console.error("Lunar conversion error in zodiac:", error);
