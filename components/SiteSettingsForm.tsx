@@ -12,15 +12,25 @@ interface SiteSettingsFormProps {
 
 export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
   const [siteName, setSiteName] = useState(settings.site_name);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(settings.site_icon_url);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    settings.site_icon_url,
+  );
   const [iconFile, setIconFile] = useState<File | null>(null);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const [isPending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function handleIconChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (previewUrl?.startsWith("blob:")) {
+      URL.revokeObjectURL(previewUrl);
+    }
+
     setIconFile(file);
     setPreviewUrl(URL.createObjectURL(file));
   }
@@ -48,7 +58,9 @@ export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Icon */}
       <div className="card-feature p-6 space-y-4">
-        <h2 className="text-base font-semibold text-stone-800">Biểu tượng trang</h2>
+        <h2 className="text-base font-semibold text-stone-800">
+          Biểu tượng trang
+        </h2>
 
         <div className="flex items-center gap-5">
           <button

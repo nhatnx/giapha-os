@@ -20,7 +20,7 @@ export default function UploadModal({
   onClose,
   onSuccess,
   initialData,
-}: UploadModalProps) {
+}: Readonly<UploadModalProps>) {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [title, setTitle] = useState("");
@@ -74,7 +74,7 @@ export default function UploadModal({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const dropped = e.dataTransfer.files?.[0];
-    if (dropped && dropped.type.startsWith("image/")) {
+    if (dropped?.type.startsWith("image/")) {
       setFile(dropped);
       setPreview(URL.createObjectURL(dropped));
       setError(null);

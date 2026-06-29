@@ -39,7 +39,7 @@ interface BasePlugin {
 
 /**
  * Adds a new page to the dashboard with a navigation entry in HeaderMenu.
- * Create the actual page at app/dashboard/<path>/page.tsx as a standard Next.js route.
+ * Create the actual page at app<path>/page.tsx (e.g. app/dashboard/my-feature/page.tsx).
  */
 export interface DashboardPagePlugin extends BasePlugin {
   type: "dashboard_page";
