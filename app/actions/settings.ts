@@ -21,7 +21,10 @@ export async function updateSiteSettings(
   // Upload new icon if provided
   let iconUrl: string | undefined;
   if (iconFile && iconFile.size > 0) {
-    const { url, error } = await uploadSettingsIcon(iconFile);
+    if (!iconFile.type.startsWith("image/"))
+      return { error: "Định dạng ảnh không hợp lệ" };
+
+    const { url, error } = await uploadSettingsIcon(supabase, iconFile);
     if (error || !url) return { error: "Tải ảnh biểu tượng thất bại" };
     iconUrl = url;
   }
