@@ -18,7 +18,7 @@ import LogoutButton from "./LogoutButton";
 import { useUser } from "./UserProvider";
 
 export default function HeaderMenu() {
-  const { user, isAdmin } = useUser();
+  const { user, isAdmin, isEditor } = useUser();
   const userEmail = user?.email;
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
