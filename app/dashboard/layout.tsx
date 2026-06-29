@@ -1,9 +1,8 @@
-import config from "@/app/config";
 import DashboardHeader from "@/components/DashboardHeader";
 import Footer from "@/components/Footer";
 import LogoutButton from "@/components/LogoutButton";
 import { UserProvider } from "@/components/UserProvider";
-import { getProfile, getUser } from "@/utils/supabase/queries";
+import { getProfile, getSiteSettings, getUser } from "@/utils/supabase/queries";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -19,7 +18,10 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
-  const profile = await getProfile(user.id);
+  const [profile, { site_name }] = await Promise.all([
+    getProfile(user.id),
+    getSiteSettings(),
+  ]);
 
   if (!profile?.is_active) {
     return (
@@ -29,7 +31,7 @@ export default async function DashboardLayout({
             <div className="flex items-center gap-4">
               <Link href="/" className="group flex items-center gap-2">
                 <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-800 group-hover:text-amber-700 transition-colors">
-                  {config.siteName}
+                  {site_name}
                 </h1>
               </Link>
             </div>

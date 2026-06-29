@@ -40,3 +40,19 @@ export const getIsAdmin = cache(async () => {
   const profile = await getProfile();
   return profile?.role === "admin";
 });
+
+export interface SiteSettings {
+  site_name: string;
+  site_icon_url: string | null;
+}
+
+export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
+  const supabase = await getSupabase();
+  const { data } = await supabase.from("site_settings").select("key, value");
+
+  const map = Object.fromEntries((data ?? []).map((r) => [r.key, r.value]));
+  return {
+    site_name: map.site_name || "Gia Phả OS",
+    site_icon_url: map.site_icon_url ?? null,
+  };
+});

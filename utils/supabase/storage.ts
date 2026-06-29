@@ -1,5 +1,27 @@
 import { createClient } from "@/utils/supabase/client";
 
+export async function uploadSettingsIcon(
+  file: File,
+): Promise<{ url: string | null; error: Error | null }> {
+  try {
+    const supabase = createClient();
+    const ext = file.name.split(".").pop();
+    const filePath = `icon-${Date.now()}.${ext}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("settings")
+      .upload(filePath, file, { cacheControl: "3600", upsert: true });
+
+    if (uploadError) throw uploadError;
+
+    const { data } = supabase.storage.from("settings").getPublicUrl(filePath);
+    return { url: data.publicUrl, error: null };
+  } catch (error) {
+    console.error("Error uploading settings icon:", error);
+    return { url: null, error: error as Error };
+  }
+}
+
 export async function uploadGalleryImage(file: File): Promise<{ url: string | null; error: Error | null }> {
   try {
     const supabase = createClient();
